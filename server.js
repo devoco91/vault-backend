@@ -1,5 +1,5 @@
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config(); // ✅ Load .env only in development
+if (process.env.FLY_APP_NAME === undefined) {
+  require('dotenv').config(); // ✅ Load .env only locally
 }
 
 const express = require('express');
