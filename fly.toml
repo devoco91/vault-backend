@@ -1,12 +1,5 @@
-# fly.toml app configuration file generated for backend-black-snowflake-3088 on 2025-08-04T13:23:28+01:00
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
-
 app = 'backend-black-snowflake-3088'
 primary_region = 'jnb'
-
-[build]
 
 [http_service]
   internal_port = 3000
