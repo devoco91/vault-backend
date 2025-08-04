@@ -1,7 +1,7 @@
 // server.js
 
 if (process.env.FLY_APP_NAME === undefined) {
-  require('dotenv').config(); // ✅ Load .env locally only
+  require('dotenv').config();
 }
 
 console.log('Starting server...');
@@ -20,6 +20,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Health check route (optional but recommended)
+app.get('/healthz', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
 app.get('/', (req, res) => {
   res.send('Welcome to Vault Backend!');
 });
@@ -31,7 +36,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Something went wrong!' });
 });
 
-const PORT = process.env.PORT || 3000; // ✅ must be 3000 to match Fly
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
