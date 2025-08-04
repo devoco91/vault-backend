@@ -3,6 +3,9 @@
 if (process.env.FLY_APP_NAME === undefined) {
   require('dotenv').config(); // ✅ Load .env locally only
 }
+console.log('Starting server...');
+console.log('MONGO_URI:', process.env.MONGO_URI ? 'defined' : 'undefined');
+
 
 const express = require('express');
 const cors = require('cors');
