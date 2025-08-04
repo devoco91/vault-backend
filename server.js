@@ -1,4 +1,6 @@
-require('dotenv').config(); // ✅ Must be at the very top
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config(); // ✅ Load .env only in development
+}
 
 const express = require('express');
 const connectDB = require('./config/db');
