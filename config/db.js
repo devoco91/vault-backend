@@ -1,3 +1,4 @@
+// config/db.js
 const mongoose = require('mongoose');
 
 console.log('🌍 Full process.env:', JSON.stringify(process.env, null, 2));
