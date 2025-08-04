@@ -1,15 +1,15 @@
+require('dotenv').config(); // ✅ Must be at the very top
+
 const express = require('express');
-const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const contactRoutes = require('./routes/contactRoutes');
-const cors = require('cors');  // Add this
+const cors = require('cors');
 
-dotenv.config();
 connectDB();
 
 const app = express();
 
-app.use(cors());           // Enable CORS for all origins
+app.use(cors());
 app.use(express.json());
 
 // Root route
