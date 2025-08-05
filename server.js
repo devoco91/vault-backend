@@ -9,7 +9,29 @@ const connectDB = require("./config/db");
 const contactRoutes = require("./routes/contactRoutes");
 
 const app = express();
-app.use(cors());
+
+const allowedOrigins = [
+  "https://vault-software.vercel.app",
+  "https://www.vault-software.vercel.app",
+  "https://www.vaultsoftware.cloud",
+   "https://vaultsoftware.cloud",
+  "http://localhost:3000"
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, origin);
+      } else {
+        callback(new Error("CORS policy: Origin not allowed"));
+      }
+    },
+    credentials: true,
+  })
+);
+
+app.options("*", cors());
 app.use(express.json());
 
 // health check
