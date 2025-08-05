@@ -3,12 +3,6 @@ if (!process.env.FLY_APP_NAME) {
   require("dotenv").config();
 }
 
-console.log("Starting server...");
-console.log("MONGO_URI:", process.env.MONGO_URI ? "defined" : "undefined");
-console.log("MONGO_URI full value:", process.env.MONGO_URI);
-console.log("process.env.PORT:", process.env.PORT);
-console.log("All envs:", process.env);
-
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
@@ -30,14 +24,19 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Something went wrong!" });
 });
 
-// connect to database before starting server
 (async () => {
   try {
+    console.log("Starting server...");
+    console.log("MONGO_URI:", process.env.MONGO_URI ? "defined" : "undefined");
+    if (!process.env.MONGO_URI) {
+      throw new Error("Missing MONGO_URI environment variable");
+    }
+
     await connectDB();
     const PORT = process.env.PORT || 8080;
     app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
   } catch (err) {
-    console.error("❌ Failed to start app due to MongoDB error:", err.message);
+    console.error("❌ Failed to start app:", err.message);
     process.exit(1);
   }
 })();
