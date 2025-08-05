@@ -2,7 +2,7 @@ app = 'backend-black-snowflake-3088'
 primary_region = 'jnb'
 
 [http_service]
-  internal_port = 3000
+  internal_port = 8080   # <-- change here
   force_https = true
   auto_stop_machines = 'stop'
   auto_start_machines = true
@@ -18,7 +18,7 @@ primary_region = 'jnb'
     method = "GET"
     path = "/"
     protocol = "http"
-    port = 3000
+    port = 8080           # <-- change here
 
 [[vm]]
   memory = '1gb'
