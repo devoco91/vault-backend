@@ -39,7 +39,13 @@ app.get("/healthz", (req, res) => res.json({ status: "ok" }));
 app.get("/", (req, res) => res.send("Welcome to Vault Backend!"));
 
 // API routes
-app.use("/api/contact", contactRoutes); // <-- This is fine
+try {
+  console.log("Registering contact route: /api/contact");
+  app.use("/api/contact", contactRoutes);
+} catch (err) {
+  console.error("❌ Route registration failed:", err.message);
+  process.exit(1);
+}
 
 // Global error handler
 app.use((err, req, res, next) => {
