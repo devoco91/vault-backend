@@ -12,9 +12,7 @@ const app = express();
 
 const allowedOrigins = [
   "https://vault-software.vercel.app",
-  "https://www.vault-software.vercel.app",
   "https://www.vaultsoftware.cloud",
-   "https://vaultsoftware.cloud",
   "http://localhost:3000"
 ];
 
@@ -34,15 +32,18 @@ app.use(
 app.options("*", cors());
 app.use(express.json());
 
-// health check
+// Health check
 app.get("/healthz", (req, res) => res.json({ status: "ok" }));
 
+// Welcome
 app.get("/", (req, res) => res.send("Welcome to Vault Backend!"));
-app.use("/api/contact", contactRoutes);
 
-// global error handler
+// API routes
+app.use("/api/contact", contactRoutes); // <-- This is fine
+
+// Global error handler
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error("🔥 Global error handler:", err.stack);
   res.status(500).json({ error: "Something went wrong!" });
 });
 
@@ -57,7 +58,6 @@ app.use((err, req, res, next) => {
     await connectDB();
     const PORT = process.env.PORT || 8080;
     app.listen(PORT, "0.0.0.0", () => console.log(`🚀 Server running on port ${PORT}`));
-
   } catch (err) {
     console.error("❌ Failed to start app:", err.message);
     process.exit(1);
