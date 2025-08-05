@@ -2,7 +2,8 @@ app = 'backend-black-snowflake-3088'
 primary_region = 'jnb'
 
 [build]
-  image = "ghcr.io/superfly/fly-nodejs"
+  builder = "heroku/buildpacks:20"
+  buildpacks = ["heroku/nodejs"]
 
 [http_service]
   internal_port = 8080
