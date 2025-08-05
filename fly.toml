@@ -1,8 +1,11 @@
 app = 'backend-black-snowflake-3088'
 primary_region = 'jnb'
 
+[build]
+  image = "ghcr.io/superfly/fly-nodejs"
+
 [http_service]
-  internal_port = 8080   # <-- change here
+  internal_port = 8080
   force_https = true
   auto_stop_machines = 'stop'
   auto_start_machines = true
@@ -18,7 +21,7 @@ primary_region = 'jnb'
     method = "GET"
     path = "/"
     protocol = "http"
-    port = 8080           # <-- change here
+    port = 8080
 
 [[vm]]
   memory = '1gb'
