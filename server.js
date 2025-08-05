@@ -5,6 +5,7 @@ if (!process.env.FLY_APP_NAME) {
 
 console.log("Starting server...");
 console.log("MONGO_URI:", process.env.MONGO_URI ? "defined" : "undefined");
+console.log("MONGO_URI full value:", process.env.MONGO_URI);
 console.log("process.env.PORT:", process.env.PORT);
 
 const express = require("express");
