@@ -29,5 +29,6 @@ COPY --from=build /app /app
 # Remove dev dependencies to shrink image
 RUN npm prune --production
 
-EXPOSE 3000
+EXPOSE 8080
+
 CMD [ "npm", "run", "start" ]
