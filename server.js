@@ -11,9 +11,10 @@ const contactRoutes = require("./routes/contactRoutes");
 const app = express();
 
 const allowedOrigins = [
-  "https://vault-software.vercel.app",
+  // "https://vault-software.vercel.app",
   "https://www.vaultsoftware.cloud",
-  "http://localhost:3000"
+  "http://localhost:3000",
+  "https://vaultsoftware.vercel.app"
 ];
 
 app.use(
