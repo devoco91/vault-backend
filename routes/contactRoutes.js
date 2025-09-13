@@ -2,17 +2,7 @@ const express = require("express");
 const Contact = require("../models/Contact");
 const router = express.Router();
 
-let fetch;
-async function loadFetch() {
-  fetch = (await import("node-fetch")).default;
-}
-loadFetch();
-
 router.post("/", async (req, res) => {
-  if (!fetch) {
-    return res.status(503).json({ error: "Server is not ready" });
-  }
-
   const {
     firstName,
     lastName,
@@ -46,7 +36,10 @@ router.post("/", async (req, res) => {
     const googleResponse = await response.json();
 
     if (!googleResponse.success) {
-      return res.status(400).json({ error: "reCAPTCHA verification failed", details: googleResponse["error-codes"] });
+      return res.status(400).json({
+        error: "reCAPTCHA verification failed",
+        details: googleResponse["error-codes"],
+      });
     }
 
     // Save contact info to DB
