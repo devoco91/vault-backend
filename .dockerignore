@@ -1,6 +1,14 @@
-/.git
-/node_modules
-.dockerignore
+# Ignore dependencies and cache
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Ignore Git
+.git
+.gitignore
+
+# Ignore environment and local configs
 .env
-Dockerfile
-fly.toml
+.DS_Store
+
+# Keep Dockerfile and fly.toml (don’t ignore them!)
