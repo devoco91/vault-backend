@@ -1,30 +1,22 @@
-app = 'backend-black-snowflake-3088'
-primary_region = 'jnb'
+app = "backend-black-snowflake-3088"
+primary_region = "jnb"
 
 [build]
-  builder = "heroku/buildpacks:20"
+  builder = "heroku/buildpacks:20"         # keep as-is for now (upgrade later)
   buildpacks = ["heroku/nodejs"]
 
 [http_service]
   internal_port = 8080
   force_https = true
-  auto_stop_machines = 'stop'
+  auto_stop_machines = "stop"
   auto_start_machines = true
   min_machines_running = 0
-  processes = ['app']
+  processes = ["app"]
 
-[checks]
-  [checks.http_check]
+  [[http_service.checks]]
     type = "http"
     interval = "10s"
     timeout = "5s"
     grace_period = "5s"
     method = "GET"
-    path = "/"
-    protocol = "http"
-    port = 8080
-
-[[vm]]
-  memory = '1gb'
-  cpu_kind = 'shared'
-  cpus = 1
+    path = "/healthz"                      # you already serve this

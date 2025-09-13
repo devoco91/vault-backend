@@ -1,18 +1,38 @@
 # See https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/
-
 name: Fly Deploy
+
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
 jobs:
   deploy:
     name: Deploy app
     runs-on: ubuntu-latest
-    concurrency: deploy-group    # optional: ensure only one action runs at a time
+
+    # Keep only one deploy running per branch; cancel older ones on new pushes
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+      cancel-in-progress: true
+
+    # Expose the token to all steps (you can keep it on the run step if you prefer)
+    env:
+      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
     steps:
       - uses: actions/checkout@v4
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      - name: Setup flyctl
+        uses: superfly/flyctl-actions/setup-flyctl@master
+        # (Optional) Pin to a commit SHA for extra safety
+
+      - name: Deploy
+        run: |
+          # If your app name differs from fly.toml or you're in a subfolder:
+          # flyctl deploy --remote-only --app <your-app> --config path/to/fly.toml
+          flyctl deploy --remote-only
+        # (Optional) working-directory: ./path-with-fly-toml
