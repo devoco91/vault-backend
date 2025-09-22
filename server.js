@@ -14,7 +14,8 @@ const allowedOrigins = [
   // "https://vault-software.vercel.app",
   "https://www.vaultsoftware.cloud",
   "http://localhost:3000",
-  "https://vaultsoftware.vercel.app"
+  "https://vaultsoftware.vercel.app",
+  "https://www.vaultsoftware.net"
 ];
 
 app.use(
