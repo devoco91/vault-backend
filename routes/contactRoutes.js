@@ -2,6 +2,29 @@ const express = require("express");
 const Contact = require("../models/Contact");
 const router = express.Router();
 
+/**
+ * GET /api/contact
+ * - Returns all saved contacts from DB
+ * - If no contacts, returns empty array
+ */
+router.get("/", async (req, res) => {
+  try {
+    const contacts = await Contact.find().sort({ createdAt: -1 }); // latest first
+    res.status(200).json({
+      message: "📋 Contacts fetched successfully",
+      count: contacts.length,
+      data: contacts,
+    });
+  } catch (error) {
+    console.error("Error fetching contacts:", error);
+    res.status(500).json({ error: "⚠️ Server error" });
+  }
+});
+
+/**
+ * POST /api/contact
+ * - Validates and saves a new contact entry
+ */
 router.post("/", async (req, res) => {
   const {
     firstName,
@@ -24,7 +47,6 @@ router.post("/", async (req, res) => {
   }
 
   try {
-    // Save contact info to DB
     const contact = new Contact({
       firstName,
       lastName,
@@ -36,7 +58,9 @@ router.post("/", async (req, res) => {
 
     await contact.save();
 
-    res.status(200).json({ message: "✅ Form submitted successfully and data saved!" });
+    res
+      .status(200)
+      .json({ message: "✅ Form submitted successfully and data saved!" });
   } catch (error) {
     console.error("Error in contact route:", error);
     res.status(500).json({ error: "⚠️ Server error" });
